@@ -1,0 +1,78 @@
+<% layout('layouts/boilerplate') %> 
+
+<div style="background-color: rgba(84, 80, 80, 0.8); padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
+
+    <h1 style="text-align: center; margin-bottom: 20px;">Latest CVEs</h1>
+
+    <!-- Scrollable container for CVE entries -->
+    <div style="max-height: 400px; overflow-y: auto; padding-right: 10px;">
+        <% for (patch of latestPatches) { 
+            // Define severity-based background and border color
+            let bgColor = 'black';
+            let borderColor = 'black';
+            
+            if (patch.seviyarity === 'Critical') {
+                bgColor = 'red';
+                borderColor = '#8B0000'; // Dark Red for complementing
+            } else if (patch.seviyarity === 'High') {
+                bgColor = 'orange';
+                borderColor = '#FF8C00'; // Dark Orange
+            } else if (patch.seviyarity === 'Medium') {
+                bgColor = 'yellow';
+                borderColor = '#FFD700'; // Gold for Medium severity
+            } else if (patch.seviyarity === 'Low') {
+                bgColor = '#f0e68c'; // Light yellow for Low severity
+                borderColor = '#BDB76B'; // Dark Khaki for Low severity
+            }
+        %>
+
+            <div class="card text-light mb-3" style="background-color: <%= bgColor %>; border: 2px solid <%= borderColor %>; border-radius: 20px; display: flex; flex-direction: column; align-items: center;">
+                <div class="card-body" style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; text-align: center;">
+                    <p class="card-text mb-3" style="color: rgb(0, 0, 0); font-weight: bold;"><%= patch.description %></p>
+                    <p class="card-text mb-3" style="color: rgb(0, 0, 0); font-weight: bold;">
+                        <small class="text-muted"><%= patch.cve %></small>
+                    </p>
+                    <a href="/allReports/<%= patch._id %>" class="btn btn-primary mb-5">View</a>
+                </div>
+            </div>
+        <% } %>
+    </div>
+    
+
+    <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+        <div style="text-align: center;">
+            <div style="width: 60px; height: 60px; background-color: red; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: rgb(0, 0, 0); font-weight: bold; font-size: 18px;">
+                <%= highSeverityCVECount %>
+            </div>
+            <p style="font-size: 16px;">Critical</p>
+        </div>
+        <div style="text-align: center;">
+            <div style="width: 60px; height: 60px; background-color: orange; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: rgb(0, 0, 0); font-weight: bold; font-size: 18px;">
+                <%= severeCVECount %>
+            </div>
+            <p style="font-size: 16px;">High</p>
+        </div>
+        <div style="text-align: center;">
+            <div style="width: 60px; height: 60px; background-color: yellow; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: black; font-weight: bold; font-size: 18px;">
+                <%= mediumCVECount %>
+            </div>
+            <p style="font-size: 16px;">Medium</p>
+        </div>
+        <div style="text-align: center;">
+            <div style="width: 60px; height: 60px; background-color: #f0e68c; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: black; font-weight: bold; font-size: 18px;">
+                <%= lowCVECount %>
+            </div>
+            <p style="font-size: 16px;">Low</p>
+        </div>
+    </div>
+    
+
+    <!-- New complementary colored div -->
+    <div style="margin-top: 30px; padding: 15px; background-color: #e6f7ff; border-radius: 8px; text-align: center;">
+        <h2 style="margin: 0; color: #007acc;">ADDITIONAL NOTE</h2>
+        <p style="margin: 5px 0; color: #333;">Stay updated with the latest security patches and vulnerabilities.</p>
+        <p style="margin: 5px 0; color: #333;">Regularly check the reports for any changes in severity levels.</p>
+    </div>
+
+</div>
+

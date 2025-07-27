@@ -1,0 +1,94 @@
+<% layout('layouts/boilerplate') %>
+
+<h1>Alerts</h1>
+
+<!-- Search Filter Input -->
+<div style="text-align: center; margin-bottom: 20px;">
+    <input type="text" id="searchInput" onkeyup="filterAlerts()" placeholder="Search by username..." style="padding: 10px; width: 300px; border-radius: 5px; border: 1px solid #ccc;">
+</div>
+
+<!-- Flex Container for Alerts -->
+<div class="flex-container" id="alertContainer">
+  <% for (alert of alerts) { %>
+    <div class="alert">
+      <a class="btn btn-light text-dark" href="/allReports/allalert/<%= alert._id %>" style="text-decoration: none;">
+        <div>
+          <h4 class="alert-name"><%= alert.name %></h4>
+          <h4><%= alert.mail %></h4>
+        </div>
+      </a>
+    </div>
+  <% } %>
+  <div class="alert add-new-alert">
+    <a href="/allReports/newalert" style="display: flex; align-items: center; justify-content: center; height: 100%; text-decoration: none;">
+      <span style="font-size: 24px;">+</span>
+    </a>
+  </div>
+</div>
+
+<style>
+  .flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 10px;
+  }
+
+  .alert, .add-new-alert {
+    background: #fff;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px #aaa;
+    width: 200px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .alert h4 {
+    margin: 5px 0;
+    font-size: 16px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .add-new-alert {
+    cursor: pointer;
+    color: #007BFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .add-new-alert span {
+    font-size: 24px;
+  }
+</style>
+
+<script>
+  // JavaScript function to filter alerts by username
+  function filterAlerts() {
+    let input = document.getElementById('searchInput');
+    let filter = input.value.toLowerCase();
+    let alertContainer = document.getElementById('alertContainer');
+    let alerts = alertContainer.getElementsByClassName('alert');
+    
+    for (let i = 0; i < alerts.length; i++) {
+      let nameElement = alerts[i].getElementsByClassName('alert-name')[0];
+      if (nameElement) {
+        let txtValue = nameElement.textContent || nameElement.innerText;
+        if (txtValue.toLowerCase().indexOf(filter) > -1) {
+          alerts[i].style.display = "";  // Show alert if match found
+        } else {
+          alerts[i].style.display = "none";  // Hide alert if no match
+        }
+      }
+    }
+  }
+</script>

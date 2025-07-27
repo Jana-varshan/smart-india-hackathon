@@ -1,0 +1,33 @@
+<% layout('layouts/boilerplate') %>
+
+<!-- CVE Scraping Form -->
+<form action="/getcve" method="POST">
+    <div class="mb-3">
+        <label class="form-label" for="cveNumber">Enter the CVE number to scrape:</label>
+        <input class="form-control" type="text" id="cveNumber" name="cveNumber" placeholder="Enter CVE number (e.g., CVE-2024-12345)" required>
+    </div>
+    <div class="mb-3">
+        <button class="btn btn-info" type="submit">Scrape CVE</button>
+    </div>
+</form>
+
+<!-- Display the list of scraped CVEs -->
+<h2 class="text-center">List of CVEs</h2>
+<% if (cveData && cveData.length > 0) { %>
+    <% cveData.forEach(cve => { %>
+        <div class="cve-details">
+            <h4>CVE ID: <%= cve.CVE %></h4>
+            <p><strong>Description:</strong> <%= cve.Description %></p>
+            <p><strong>Published Date:</strong> <%= cve.published_date %></p>
+            <p><strong>References:</strong></p>
+            <ul>
+                <% cve.references.forEach(reference => { %>
+                    <li><a href="<%= reference %>" target="_blank"><%= reference %></a></li>
+                <% }) %>
+            </ul>
+        </div>
+        <hr>
+    <% }) %>
+<% } else { %>
+    <p class="text-center">No CVE data available. Please enter a CVE number to scrape.</p>
+<% } %>

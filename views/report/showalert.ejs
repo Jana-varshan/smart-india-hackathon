@@ -1,0 +1,28 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="row">
+  <div class="col-6 offset-3">
+    <div class="card mb-3" style="border-radius:23px; background-color: black;">
+      <div class="card-body text-light">
+        <h5 class="card-title"><%= alert.name %></h5>
+        <p class="card-text"><%= alert.mail %></p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item text-light" style="background-color: black;"><b>Severity : </b>
+          <% alert.seviyarity.forEach(severity => { %>
+            <span class="badge bg-<%= severity == 'critical' ? 'danger' : severity == 'high' ? 'warning' : severity == 'medium' ? 'info' : 'success' %>"><%= severity %></span>
+          <% }) %>
+        </li>
+      </ul>
+      <div class="card-body">
+        <a class="card-link btn btn-warning" href="/allReports/allalert/<%= alert._id %>/edit">Edit</a>
+        <form class="d-inline" action="/allReports/allalert/<%= alert._id %>?_method=DELETE" method="post">
+          <button class="btn btn-danger">DELETE</button>
+        </form>
+      </div>
+      <div class="card-footer">
+        <a class="btn btn-light" href="/allReports/allalert">All alerts</a>
+      </div>
+    </div>
+  </div>
+</div>

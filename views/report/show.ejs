@@ -1,0 +1,36 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="row  " >
+    <div class="col-6 offset-3">
+        <div class="card mb-3  " style="border-radius:23px; background-color: black;" >
+            <img src="<%= report.image %>" class="card-img-top p-3 " style="border-radius:25px;" alt="...">
+            <div class="card-body text-light">
+              <h5 class="card-title"><%= report.title %></h5>
+              <p class="card-text"><%= report.description %></p>
+            </div>
+            <ul class="list-group list-group-flush" >
+              <li class="list-group-item text-muted" style="background-color: black;"><b>CVE Number : </b><%= report.cve %></li>
+              <li class="list-group-item text-light" style="background-color: black;"><b>Severity : </b><%= report.seviyarity %></li>
+              <li class="list-group-item text-light" style="background-color: black;"><b>Patch : </b><%= (report.patch) %></li>
+              <li class="list-group-item text-light" style="background-color: black;"><b>Solution : </b> <span><%= report.solution %></span></li>
+            </ul>
+            <div class="card-body">
+                <a class="card-link btn btn-warning" href="/allReports/<%= report._id %>/edit">Edit</a>
+              <form class="d-inline" action="/allReports/<%= report._id %>?_method=DELETE" method="post">
+                <button class="btn btn-danger">DELETE</button>
+            </form>
+            </div>
+            <div class="card-footer ">
+                <a class="btn btn-light" href="/allReports">All Reports</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+      
+
+
+
+
+
+
